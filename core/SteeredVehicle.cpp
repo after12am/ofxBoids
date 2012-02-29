@@ -171,114 +171,25 @@ void SteeredVehicle::avoid()
 	
 }
 
-template<typename Type> void SteeredVehicle::keep(vector<Type>& vehicles)
+bool SteeredVehicle::inSight(const ofVec3f& target)
 {
-	/*
-	 keep distance from other vehicles
-	 
-	 縦横の交点にseekするように変えても
-	 */
-	ofVec3f averageVelocity;
-	ofVec3f averagePosition;
-	int inSightCnt = 0;
-	
-	for (int i = 0; i < vehicles.size(); i++)
-	{
-		if (vehicles[i].getId() == getId()) continue;
-		if (!inSight(vehicles[i])) continue;
-		averageVelocity += vehicles[i].velocity;
-		averagePosition += vehicles[i].position;
-		if (position.distance(vehicles[i].position) < keepDistance) flee(vehicles[i].position);
-		inSightCnt++;
-	}
-	
-	if (inSightCnt > 0)
-	{
-		averagePosition *= (float)1 / inSightCnt;
-		flee(averagePosition);
-		averageVelocity *= (float)1 / inSightCnt;
-		steeringForce += averageVelocity - velocity;
-	}
-}
-
-template<typename Type> void SteeredVehicle::flock(vector<Type>& vehicles)
-{
-	ofVec3f averageVelocity;
-	ofVec3f averagePosition;
-	int inSightCnt = 0;
-	
-	averageVelocity.set(velocity);
-	
-	for (int i = 0; i < vehicles.size(); i++)
-	{
-		if (vehicles[i].getId() == getId()) continue;
-		if (!inSight(vehicles[i])) continue;
-		averageVelocity += vehicles[i].velocity;
-		averagePosition += vehicles[i].position;
-		if (tooClose(vehicles[i])) flee(vehicles[i].position);
-		inSightCnt++;
-	}
-	
-	if (inSightCnt > 0)
-	{
-		averagePosition *= (float)1 / inSightCnt;
-		seek(averagePosition);
-		averageVelocity *= (float)1 / inSightCnt;
-		steeringForce += averageVelocity - velocity;
-	}
-}
-
-//	public: template<typename Type> void repel(vector<Type>& vehicles)
-//	{
-//		flee(target);
-//		
-//		
-//		for (int i = 0; i < vehicles.size(); i++)
-//		{
-//			float M = .5;
-//			float Q = 2;
-//			
-//			dist = position.distance(target);
-//			E = Q / (dist * dist);
-//			P = Q * 
-//			
-//			P = Q * me.Q / pow(dist, 6);
-//			F = (Q * E) + P;
-//			A = (F/M) * 2.0;
-//			
-//			if (R > 2.0) { 
-//				xv += A * (x - me.x) / dist; 
-//				yv += A * (y - me.y) / dist; 
-//			}
-//		}
-//	}
-
-
-
-bool SteeredVehicle::inSight(const Vehicle& target)
-{
-	if (position.distance(target.position) > inSightDist) return false;
+	if (position.distance(target) > inSightDist) return false;
 	
 	ofVec3f heading;
 	heading.set(velocity);
 	heading.normalize();
 	
 	ofVec3f difference;
-	difference.set(target.position);
+	difference.set(target);
 	difference -= position;
 	
 	if (difference.dot(heading) < 0) return false;
 	return true;
 }
 
-bool SteeredVehicle::tooClose(const Vehicle& target)
+bool SteeredVehicle::tooClose(const ofVec3f& target)
 {
-	return this->position.distance(target.position) < tooCloseDist;
-}
-
-bool SteeredVehicle::tooClose(const ofVec3f& position)
-{
-	return this->position.distance(position) < tooCloseDist;
+	return position.distance(target) < tooCloseDist;
 }
 
 ofVec3f SteeredVehicle::getRandVec()

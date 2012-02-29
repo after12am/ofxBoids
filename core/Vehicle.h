@@ -38,6 +38,7 @@ public:
 		mass = 1.0f;
 		maxSpeed = 4.0f;
 		maxTrailSize = 10;
+		position.set(ofVec3f(_x, _y, _z));
 	}
 	
 	int getId() { return id; }

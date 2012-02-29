@@ -67,7 +67,7 @@ public:
 	
 	//void addForce(const ofVec3f vec);
 	
-	// basic behavior
+	
 	void update();
 	void seek(const ofVec3f& target);
 	void flee(const ofVec3f& target);
@@ -77,13 +77,67 @@ public:
 	void wander();
 	void patrol(const vector<ofVec3f> paths);
 	void avoid();
+	bool inSight(const ofVec3f& target);
+	bool tooClose(const ofVec3f& target);
 	
-	template<typename Type> void keep(vector<Type>& vehicles);
-	template<typename Type> void flock(vector<Type>& vehicles);
+	/*
+	 // 必要か？
+	template<typename Type> void keep(vector<Type>& vehicles)
+	{
+		// keep distance from other vehicles
+		// 縦横の交点にseekするように変えても
+		
+		ofVec3f averageVelocity;
+		ofVec3f averagePosition;
+		int inSightCnt = 0;
+		
+		for (int i = 0; i < vehicles.size(); i++)
+		{
+			if (vehicles[i].getId() == getId()) continue;
+			if (!inSight(vehicles[i].position)) continue;
+			averageVelocity += vehicles[i].velocity;
+			averagePosition += vehicles[i].position;
+			if (position.distance(vehicles[i].position) < keepDistance) flee(vehicles[i].position);
+			inSightCnt++;
+		}
+		
+		if (inSightCnt > 0)
+		{
+			averagePosition *= (float)1 / inSightCnt;
+			flee(averagePosition);
+			averageVelocity *= (float)1 / inSightCnt;
+			steeringForce += averageVelocity - velocity;
+		}
+	}*/
 	
-	bool inSight(const Vehicle& vehicle);
-	bool tooClose(const Vehicle& target);
-	bool tooClose(const ofVec3f& position);
+	template<typename Type> void flock(vector<Type>& vehicles)
+	{
+		ofVec3f averageVelocity;
+		ofVec3f averagePosition;
+		int inSightCnt = 0;
+		
+		averageVelocity.set(velocity);
+		
+		for (int i = 0; i < vehicles.size(); i++)
+		{
+			if (vehicles[i].getId() == getId()) continue;
+			if (!inSight(vehicles[i].position)) continue;
+			
+			averageVelocity += vehicles[i].velocity;
+			averagePosition += vehicles[i].position;
+			
+			if (tooClose(vehicles[i].position)) flee(vehicles[i].position);
+			inSightCnt++;
+		}
+		
+		if (inSightCnt > 0)
+		{
+			averagePosition *= 1.0f / inSightCnt;
+			seek(averagePosition);
+			averageVelocity *= 1.0f / inSightCnt;
+			steeringForce += averageVelocity - velocity;
+		}
+	}
 };
 
 #endif
