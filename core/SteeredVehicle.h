@@ -36,17 +36,14 @@ public:
 	float wanderRadius;
 	float wanderRange;
 	
-	// parameter related to patrol
 	float pathThreshold;
 	bool pathLoop;
 	int pathIndex;
 	
-	// parameter related to flock
 	float inSightDist;
 	float tooCloseDist;
 	
-	// parameter related to keep
-	float keepDistance;
+	//float keepDistance;
 	
 	
 	SteeredVehicle(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f) : Vehicle(_x, _y, _z)
