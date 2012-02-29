@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "SteeredVehicle.h"
+#include "ofxBoids.h"
 
 class testApp : public ofBaseApp{
 
