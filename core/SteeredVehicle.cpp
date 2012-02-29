@@ -11,6 +11,11 @@
 
 
 
+void SteeredVehicle::addForce(const ofVec3f vec)
+{
+	steeringForce += vec;
+}
+
 void SteeredVehicle::update()
 {
 	steeringForce.limit(maxForce);
@@ -19,12 +24,6 @@ void SteeredVehicle::update()
 	Vehicle::update();
 	steeringForce.set(0, 0, 0);
 }
-
-/*
-void SteeredVehicle::addForce(const ofVec3f vec)
-{
-	steeringForce += vec;
-}*/
 
 void SteeredVehicle::seek(const ofVec3f& target)
 {
@@ -169,6 +168,20 @@ void SteeredVehicle::patrol(const vector<ofVec3f> paths)
 void SteeredVehicle::avoid()
 {
 	
+}
+
+void SteeredVehicle::randomWalk()
+{
+	float a1 = (float)(ofRandom(0, 360) * PI / 180);
+	float a2 = (float)(ofRandomuf() * 2 * PI);
+	
+	ofVec3f desiredVelocity;
+	desiredVelocity.x = (float)(sin(a1) * cos(a2));
+	desiredVelocity.y = (float)(sin(a1) * sin(a2));
+	desiredVelocity.z = (float)(cos(a1));
+	desiredVelocity.normalize();
+	desiredVelocity *= maxSpeed;
+	steeringForce += (desiredVelocity - velocity);
 }
 
 bool SteeredVehicle::inSight(const ofVec3f& target)
