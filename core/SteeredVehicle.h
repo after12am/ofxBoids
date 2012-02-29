@@ -59,7 +59,7 @@ public:
 		pathLoop = false;
 		inSightDist = 120.0f;
 		tooCloseDist = 20.0f;
-		keepDistance = 120.0f;
+		//keepDistance = 120.0f;
 	}
 	
 	//void addForce(const ofVec3f vec);
