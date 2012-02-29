@@ -9,6 +9,7 @@
 #include "Vehicle.h"
 #include <iostream>
 
+// initialize instance identifier
 int Vehicle::number = 0;
 
 

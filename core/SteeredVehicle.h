@@ -17,7 +17,6 @@ class SteeredVehicle : public Vehicle {
 	
 private:
 	
-	// parameter related to wander
 	float wanderAngle1;
 	float wanderAngle2;
 	
@@ -41,11 +40,11 @@ public:
 	float pathThreshold;
 	bool pathLoop;
 	int pathIndex;
-		
+	
 	// parameter related to flock
 	float inSightDist;
 	float tooCloseDist;
-		
+	
 	// parameter related to keep
 	float keepDistance;
 	
@@ -53,22 +52,16 @@ public:
 	SteeredVehicle(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f) : Vehicle(_x, _y, _z)
 	{
 		maxForce = 1.0f;
-		
-		// wander
 		wanderAngle1 = ofRandom(0.0f, 360.0f);
 		wanderAngle2 = ofRandom(0.0f, 360.0f);
 		wanderDistance = 10.0f;
 		wanderRadius = 5.0f;
 		wanderRange = 10.0f;
-		
-		// patrol
 		pathIndex = 0;
 		pathThreshold = 20.0f;
 		pathLoop = false;
-		
 		inSightDist = 120.0f;
 		tooCloseDist = 20.0f;
-		
 		keepDistance = 120.0f;
 	}
 	

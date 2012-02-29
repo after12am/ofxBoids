@@ -17,6 +17,7 @@ class Vehicle {
 private:
 	
 	static int number;
+	
 	// instance identifier
 	int id;
 	
