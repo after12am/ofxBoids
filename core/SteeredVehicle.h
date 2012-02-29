@@ -87,9 +87,12 @@ public:
 			
 			averageVelocity += vehicles[i].velocity;
 			averagePosition += vehicles[i].position;
-			
-			if (tooClose(vehicles[i].position)) flee(vehicles[i].position);
 			inSightCnt++;
+			
+			if (tooClose(vehicles[i].position))
+			{
+				flee(vehicles[i].position);
+			}
 		}
 		
 		if (inSightCnt > 0)
@@ -100,40 +103,6 @@ public:
 			steeringForce += averageVelocity - velocity;
 		}
 	}
-	
-	
-	/*
-	// 必要か？
-	
-	float keepDistance;
-	
-	 template<typename Type> void keep(vector<Type>& vehicles)
-	{
-		// keep distance from other vehicles
-		// 縦横の交点にseekするように変えても
-		
-		ofVec3f averageVelocity;
-		ofVec3f averagePosition;
-		int inSightCnt = 0;
-		
-		for (int i = 0; i < vehicles.size(); i++)
-		{
-			if (vehicles[i].getId() == getId()) continue;
-			if (!inSight(vehicles[i].position)) continue;
-			averageVelocity += vehicles[i].velocity;
-			averagePosition += vehicles[i].position;
-			if (position.distance(vehicles[i].position) < keepDistance) flee(vehicles[i].position);
-			inSightCnt++;
-		}
-		
-		if (inSightCnt > 0)
-		{
-			averagePosition *= (float)1 / inSightCnt;
-			flee(averagePosition);
-			averageVelocity *= (float)1 / inSightCnt;
-			steeringForce += averageVelocity - velocity;
-		}
-	}*/
 };
 
 #endif
