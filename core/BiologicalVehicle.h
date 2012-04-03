@@ -22,11 +22,34 @@
  
  **********************************************************************************/
 
-#ifndef _ofxBoids_h
-#define _ofxBoids_h
+#ifndef _BiologicalVehicle_h
+#define _BiologicalVehicle_h
 
-#include "Vehicle.h"
 #include "SteeredVehicle.h"
-#include "BiologicalVehicle.h"
+
+
+class BiologicalVehicle : public SteeredVehicle {
+	
+protected:
+	
+	float age;
+	
+public:
+	
+	float lifeSpan;
+	float remainingLifePer;	// range from 1.0 (birth) to 0.0 (death)
+	
+	
+	BiologicalVehicle(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f) : SteeredVehicle(_x, _y, _z) {
+		
+		age = 0.0;
+		lifeSpan = 1.0;
+		remainingLifePer = 1.0;
+	}
+	
+	void aging(float inc);
+	bool isDead();
+};
+
 
 #endif

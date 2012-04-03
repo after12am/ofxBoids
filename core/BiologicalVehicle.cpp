@@ -22,11 +22,17 @@
  
  **********************************************************************************/
 
-#ifndef _ofxBoids_h
-#define _ofxBoids_h
-
-#include "Vehicle.h"
-#include "SteeredVehicle.h"
 #include "BiologicalVehicle.h"
+#include <iostream>
 
-#endif
+
+void BiologicalVehicle::aging(float inc)
+{
+	age += inc;
+	remainingLifePer = max(0.0f, min(1.0f, (lifeSpan - age) / lifeSpan));
+}
+
+bool BiologicalVehicle::isDead()
+{
+	return age > lifeSpan;
+}
