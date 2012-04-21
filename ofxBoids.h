@@ -29,4 +29,8 @@
 #include "SteeredVehicle.h"
 #include "BiologicalVehicle.h"
 
+typedef Vehicle ofxVehicle;
+typedef SteeredVehicle ofxSteeredVehicle;
+typedef BiologicalVehicle ofxBiologicalVehicle;
+
 #endif
