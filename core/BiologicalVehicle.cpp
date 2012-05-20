@@ -29,6 +29,7 @@
 void BiologicalVehicle::aging(float inc)
 {
 	age += inc;
+	if (age < 0.f) age = 0.f;
 	remainingLifePer = max(0.0f, min(1.0f, (lifeSpan - age) / lifeSpan));
 }
 
