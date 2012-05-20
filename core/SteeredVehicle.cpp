@@ -125,16 +125,20 @@ void SteeredVehicle::evade(const Vehicle& target)
 	flee(predictedTarget);
 }
 
-ofVec3f getOffset(const float r, const float angle1, const float angle2)
+ofVec3f SteeredVehicle::getOffset()
 {
-	float a1 = (float)(angle1 * PI / 180);
-	float a2 = (float)(angle2 * PI / 180);
+	
+	float a1 = (float)(wanderAngle1 * PI / 180);
+	float a2 = (float)(wanderAngle2 * PI / 180);
 	
 	ofVec3f offset;
-	offset.x = (float)(r * sin(a1) * cos(a2));
-	offset.y = (float)(r * sin(a1) * sin(a2));
-	offset.z = (float)(r * cos(a1));
-	//offset *= r;
+	offset.x = (float)(wanderRadius * sin(a1) * cos(a2));
+	offset.y = (float)(wanderRadius * sin(a1) * sin(a2));
+	offset.z = (float)(wanderRadius * cos(a1));
+	//offset *= wanderRadius;
+	
+	wanderAngle1 += (float)(ofRandom(0, wanderRange) - (float)wanderRange * .5f);
+	wanderAngle2 += (float)(ofRandom(0, wanderRange) - (float)wanderRange * .5f);
 	
 	return offset;
 }
@@ -147,10 +151,8 @@ void SteeredVehicle::wander()
 	center.set(velocity);
 	center.normalize();
 	center *= wanderDistance;
-	offset = getOffset(wanderRadius, wanderAngle1, wanderAngle2);
+	offset = getOffset();
 	
-	wanderAngle1 += (float)(ofRandom(0, wanderRange) - (float)wanderRange * .5f);
-	wanderAngle2 += (float)(ofRandom(0, wanderRange) - (float)wanderRange * .5f);
 	steeringForce += center + offset;
 }
 

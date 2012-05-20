@@ -40,7 +40,7 @@ private:
 protected:
 	
 	ofVec3f steeringForce;
-	ofVec3f getOffset(const float r, const float angle1, const float angle2);
+	ofVec3f getOffset();
 	ofVec3f getRandVec();
 	
 	
