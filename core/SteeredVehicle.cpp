@@ -169,7 +169,7 @@ void SteeredVehicle::wander(const float force)
 
 void SteeredVehicle::patrol(const vector<ofVec3f> paths)
 {
-	Boolean last = pathIndex >= paths.size() - 1;
+	bool last = pathIndex >= paths.size() - 1;
 	
 	if (position.distance(paths[pathIndex]) < pathThreshold)
 	{
