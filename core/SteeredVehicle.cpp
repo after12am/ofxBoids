@@ -67,6 +67,13 @@ void SteeredVehicle::flee(const ofVec3f& target)
 	ofVec3f desiredVelocity;
 	desiredVelocity.set(target);
 	desiredVelocity -= position;
+	
+	// if target position and this vehicle position is the same,
+	// vehicle runs away to random vector.
+	if (desiredVelocity.length() == 0) {
+		desiredVelocity = getRandVec();
+	}
+	
 	desiredVelocity.normalize();
 	desiredVelocity *= maxSpeed;
 	steeringForce -= (desiredVelocity - velocity);
