@@ -7,3 +7,7 @@ ofxBoids is an openframeworks addon that allow you to control animal motion such
 I will show you how crowd simulation works.
 
 <img src="https://github.com/after12am/ofxBoids/blob/master/capture.gif" width="100%" />
+
+## License
+
+Copyright (c) 2012-2016 Satoshi Okami. See the LICENSE file for license rights and limitations (MIT).
